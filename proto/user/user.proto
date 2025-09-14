@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package user;
+
+option go_package = "backend-hexagonal/proto/user";
+
+import "google/protobuf/timestamp.proto";
+
+// User message definition
+message User {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
+
+// CreateUser request and response
+message CreateUserRequest {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message CreateUserResponse {
+  User user = 1;
+  string message = 2;
+}
+
+// GetUser request and response
+message GetUserRequest {
+  string id = 1;
+}
+
+message GetUserResponse {
+  User user = 1;
+}
+
+// ListUsers request and response
+message ListUsersRequest {
+  int32 page = 1;
+  int32 limit = 2;
+}
+
+message ListUsersResponse {
+  repeated User users = 1;
+  int32 total = 2;
+  int32 page = 3;
+  int32 limit = 4;
+}
+
+// UpdateUser request and response
+message UpdateUserRequest {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}
+
+message UpdateUserResponse {
+  User user = 1;
+  string message = 2;
+}
+
+// DeleteUser request and response
+message DeleteUserRequest {
+  string id = 1;
+}
+
+message DeleteUserResponse {
+  string message = 1;
+}
+
+// UserService definition
+service UserService {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse);
+  rpc GetUser(GetUserRequest) returns (GetUserResponse);
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse);
+  rpc UpdateUser(UpdateUserRequest) returns (UpdateUserResponse);
+  rpc DeleteUser(DeleteUserRequest) returns (DeleteUserResponse);
+}
